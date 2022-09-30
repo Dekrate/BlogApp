@@ -15,7 +15,7 @@ public class DataSourceProvider {
         if (dataSource == null) {
             InitialContext context = new InitialContext();
             Context envContext = (Context) context.lookup("java:comp/env/");
-            dataSource = (DataSource) envContext.lookup("jdbc/secret");
+            dataSource = (DataSource) envContext.lookup("jdbc/blog");
         }
         return dataSource;
     }

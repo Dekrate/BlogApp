@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet(name = "CommentServlet", value = "/")
+@WebServlet("/comments")
 public class CommentServlet extends HttpServlet {
     private final CommentDao commentDao = new CommentDao();
 //    @Override

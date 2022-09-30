@@ -3,17 +3,20 @@ package pl.diakowski.blog.User;
 public class User {
     private Integer id;
     private String login;
+    private String email;
     private String password;
 
-    public User(Integer id, String login, String password) {
+    public User(Integer id, String login, String email, String password) {
         this.id = id;
         this.login = login;
+        this.email = email;
         this.password = password;
     }
 
-    public User(Integer id, String login) {
-        this.id = id;
+    public User(String login, String email, String password) {
         this.login = login;
+        this.email = email;
+        this.password = password;
     }
 
     public User(String login, String password) {
@@ -43,5 +46,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

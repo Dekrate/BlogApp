@@ -7,21 +7,27 @@ import pl.diakowski.blog.Article.Article;
 import pl.diakowski.blog.Article.ArticleCategory;
 import pl.diakowski.blog.Article.ArticleCategoryDao;
 import pl.diakowski.blog.Article.ArticleDao;
+import pl.diakowski.blog.Comment.Comment;
 import pl.diakowski.blog.Comment.CommentDao;
 
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/index")
-public class HomePageServlet extends HttpServlet {
+@WebServlet("/article")
+public class ArticleServlet extends HttpServlet {
     ArticleDao articleDao = new ArticleDao();
     ArticleCategoryDao articleCategoryDao = new ArticleCategoryDao();
+
+    CommentDao commentDao = new CommentDao();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Integer id = Integer.valueOf(request.getParameter("id"));
         List<ArticleCategory> allCategories = articleCategoryDao.getAllCategories();
-        List<Article> allArticles = articleDao.findAllArticles();
-        request.setAttribute("allArticles", allArticles);
+        Article article = articleDao.findArticle(id);
+        List<Comment> commentsForArticle = commentDao.getCommentsForArticle(id);
         request.setAttribute("allCategories", allCategories);
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        request.setAttribute("article", article);
+        request.setAttribute("commentsForArticle", commentsForArticle);
+        request.getRequestDispatcher("/article.jsp").forward(request, response);
     }
 }

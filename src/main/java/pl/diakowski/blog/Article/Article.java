@@ -1,15 +1,15 @@
 package pl.diakowski.blog.Article;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Article {
     private Integer id;
     private Integer categoryId;
-    private Timestamp dateAndTime;
+    private LocalDateTime dateAndTime;
     private String title;
     private String content;
 
-    public Article(Integer id, Integer categoryId, Timestamp dateAndTime, String title, String content) {
+    public Article(Integer id, Integer categoryId, LocalDateTime dateAndTime, String title, String content) {
         this.id = id;
         this.categoryId = categoryId;
         this.dateAndTime = dateAndTime;
@@ -17,7 +17,7 @@ public class Article {
         this.content = content;
     }
 
-    public Article(Integer categoryId, Timestamp dateAndTime, String title, String content) {
+    public Article(Integer categoryId, LocalDateTime dateAndTime, String title, String content) {
         this.categoryId = categoryId;
         this.dateAndTime = dateAndTime;
         this.title = title;
@@ -56,11 +56,11 @@ public class Article {
         this.content = content;
     }
 
-    public Timestamp getDateAndTime() {
+    public LocalDateTime getDateAndTime() {
         return dateAndTime;
     }
 
-    public void setDateAndTime(Timestamp dateAndTime) {
+    public void setDateAndTime(LocalDateTime dateAndTime) {
         this.dateAndTime = dateAndTime;
     }
 }

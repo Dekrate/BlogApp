@@ -18,11 +18,13 @@ public class UserDao {
     }
 
     public void addUser(User user) {
-        String sql = String.format("INSERT INTO blog.users (username, password) VALUES ('%s', '%s')", user.getLogin(), user.getPassword());
+        String sql = "INSERT INTO blog.users (email, username, password) VALUES (?, ?, ?)";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, user.getLogin());
-            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getLogin());
+            preparedStatement.setString(3, user.getPassword());
+
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) { // adding parameter id in object User

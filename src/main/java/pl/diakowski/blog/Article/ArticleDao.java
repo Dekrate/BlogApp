@@ -1,10 +1,12 @@
 package pl.diakowski.blog.Article;
 
+import jakarta.validation.constraints.Null;
 import pl.diakowski.blog.DataSourceProvider.DataSourceProvider;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class ArticleDao {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 int articles_category_id = resultSet.getInt("articles_category_id");
-                Timestamp dateAndTime = (Timestamp) resultSet.getObject("date");
+                LocalDateTime dateAndTime = (LocalDateTime) resultSet.getObject("date");
                 String title = resultSet.getString("title");
                 String content = resultSet.getString("content");
                 arrayList.add(new Article(id, articles_category_id, dateAndTime, title, content));
@@ -57,5 +59,27 @@ public class ArticleDao {
             throw new RuntimeException(e);
         }
         return arrayList;
+    }
+
+    public Article findArticle(Integer id) {
+        final String sql = String.format("SELECT * FROM blog.articles WHERE id=%d", id);
+        Article article = null;
+        try (Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()) {
+                int articlesCategoryId = resultSet.getInt("articles_category_id");
+                LocalDateTime date = (LocalDateTime) resultSet.getObject("date");
+                String title = resultSet.getString("title");
+                String content = resultSet.getString("content");
+                article = new Article(id, articlesCategoryId, date, title, content);
+            } else { // to do
+                throw new NullPointerException("Nie znaleziono artykułu");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return article;
     }
 }

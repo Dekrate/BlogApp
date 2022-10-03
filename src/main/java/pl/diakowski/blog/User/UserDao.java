@@ -5,6 +5,7 @@ import pl.diakowski.blog.DataSourceProvider.DataSourceProvider;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.Objects;
 
 public class UserDao {
     private final DataSource dataSource;
@@ -33,5 +34,22 @@ public class UserDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    public boolean checkPassword(String username, String password) {
+        final String sql = String.format("SELECT password FROM blog.users WHERE username='%s'", username);
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                if (!Objects.equals(resultSet.getString("username"), username)) {
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
     }
 }

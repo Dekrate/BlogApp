@@ -22,6 +22,8 @@ public class HomePageServlet extends HttpServlet {
         List<Article> allArticles = articleDao.findAllArticles();
         request.setAttribute("allArticles", allArticles);
         request.setAttribute("allCategories", allCategories);
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }

@@ -11,12 +11,12 @@
 </head>
 <body>
     <div class="container">
-
+        <p>Jesteś zalogowany jako ${pageContext.request.userPrincipal.name}</p>
         <header>
             <h1>Blog </h1>
     <%--        adres do strony--%>
             <c:if test="${sessionScope.username == null}">
-                <form action="login.jsp">
+                <form action="login">
                     <input type="submit" class="login-button" value="Zaloguj" />
                 </form>
             </c:if>

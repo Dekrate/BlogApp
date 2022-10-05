@@ -14,8 +14,8 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<% if (request.getSession().getAttribute("username") == null) {
-  response.sendRedirect("/index");
+<% if (request.getSession().getAttribute("username") != null) {
+  response.sendRedirect(request.getContextPath() + "/index");
 }%>
   <div class="container">
     <h1>Rejestracja</h1>
@@ -35,7 +35,7 @@
 
       <button type="submit" class="button purplefade">Zarejestruj</button>
       <br>
-      <p>Posiadasz już konto? <a href="login.jsp">Zaloguj się!</a></p>
+      <p>Posiadasz już konto? <a href="WEB-INF/login.jsp">Zaloguj się!</a></p>
 
     </form>
   </div>

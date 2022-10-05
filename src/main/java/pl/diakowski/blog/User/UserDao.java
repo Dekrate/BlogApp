@@ -43,7 +43,7 @@ public class UserDao {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                if (!Objects.equals(resultSet.getString("username"), username)) {
+                if (!resultSet.getString(1).equals(password)) {
                     return false;
                 }
             }

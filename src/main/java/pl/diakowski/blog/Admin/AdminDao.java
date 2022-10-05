@@ -18,7 +18,7 @@ public class AdminDao {
     }
 
     public void addAdmin(Admin admin) {
-        String sql = String.format("INSERT INTO blog.admins (users_id) VALUES ('%d')", admin.getUserId());
+        String sql = String.format("INSERT INTO blog.user_roles (users_id) VALUES ('%d')", admin.getUserId());
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, admin.getUserId());

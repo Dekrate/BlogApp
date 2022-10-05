@@ -6,4 +6,13 @@
               password="haslo"
               driverClassName="com.mysql.cj.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/blog?serverTimezone=UTC"/>
+    <Realm className="org.apache.catalina.realm.DataSourceRealm"
+           connectionURL="jdbc:mysql://localhost/login"
+           dataSourceName="jdbc/blog"
+           localDataSource="true"
+           userTable="users"
+           userNameCol="username"
+           userCredCol="password"
+           userRoleTable="user_roles"
+           roleNameCol="user_roles"/>
 </Context>

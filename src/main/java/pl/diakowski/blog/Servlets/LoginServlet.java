@@ -13,20 +13,10 @@ public class LoginServlet extends HttpServlet {
     UserDao userDao = new UserDao();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("username") != null) {
-            response.sendRedirect("/index");
-        }
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        if (userDao.checkPassword(username, password)) {
-            session.setAttribute("username", username);
-            response.sendRedirect("/index");
-        } else {
-            request.setAttribute("validationFailure", false);
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
-        }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+        response.addHeader("Cache-Control", "no-store,no-cache,must-revalidate");
+        response.addHeader("Pragma", "no-cache");
+        response.addHeader("Expires", "-1");
     }
 }

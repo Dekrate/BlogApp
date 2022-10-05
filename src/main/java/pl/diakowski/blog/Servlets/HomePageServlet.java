@@ -10,14 +10,17 @@ import pl.diakowski.blog.Article.ArticleDao;
 import pl.diakowski.blog.Comment.CommentDao;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
-@WebServlet("/index")
+@WebServlet({"/index", ""})
 public class HomePageServlet extends HttpServlet {
     ArticleDao articleDao = new ArticleDao();
     ArticleCategoryDao articleCategoryDao = new ArticleCategoryDao();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        Principal userPrincipal = request.getUserPrincipal();
         List<ArticleCategory> allCategories = articleCategoryDao.getAllCategories();
         List<Article> allArticles = articleDao.findAllArticles();
         request.setAttribute("allArticles", allArticles);

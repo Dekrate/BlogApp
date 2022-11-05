@@ -1,9 +1,10 @@
 package pl.diakowski.blog.Servlets;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
-import org.hibernate.Session;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import pl.diakowski.blog.User.User;
 import pl.diakowski.blog.User.UserDao;
 
@@ -19,8 +20,8 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         userDao.addUser(new User(username, email, password));
-        HttpSession session = request.getSession();
-        session.setAttribute("username", username);
+        request.login(username, password);
+//        session.setAttribute("username", username);
         response.sendRedirect(referer);
     }
 }

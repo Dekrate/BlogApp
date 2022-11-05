@@ -11,10 +11,7 @@
 <head>
   <title>Zaloguj się</title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="../style.css">
-  <meta http-equiv="Cache-Control" content="no-store,no-cache,must-revalidate"/>
-  <meta http-equiv="Pragma" content="no-cache"/>
-  <meta http-equiv="Expires" content="-1"/>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -22,6 +19,9 @@
 <%--        response.sendRedirect(request.getContextPath() + "/index");--%>
 <%--      }%>--%>
   <div class="container">
+    <c:if test="${not empty pageContext.request.userPrincipal}">
+      <script>history.back();</script>
+    </c:if>
     <h1>Zaloguj się</h1>
     <hr>
     <form action="j_security_check" method="post">
@@ -34,14 +34,9 @@
 
       <button type="submit" class="button purplefade">Zaloguj się</button>
       <br>
-      <p>Nie posiadasz jeszcze konta? <a href="../register.jsp">Zaloguj się!</a></p>
+      <p>Nie posiadasz jeszcze konta? <a href="register.jsp">Zaloguj się!</a></p>
     </form>
   </div>
 
 </body>
-<script>
-  setInterval(function(){
-    location.reload(true);
-  },5*60*1000);
-</script>
 </html>

@@ -1,13 +1,15 @@
 package pl.diakowski.blog.Servlets;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import pl.diakowski.blog.Article.Article;
 import pl.diakowski.blog.Article.ArticleCategory;
 import pl.diakowski.blog.Article.ArticleCategoryDao;
 import pl.diakowski.blog.Article.ArticleDao;
-import pl.diakowski.blog.Comment.CommentDao;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -25,8 +27,9 @@ public class HomePageServlet extends HttpServlet {
         List<Article> allArticles = articleDao.findAllArticles();
         request.setAttribute("allArticles", allArticles);
         request.setAttribute("allCategories", allCategories);
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
+        Principal userPrincipal = request.getUserPrincipal();
+
+//        String username = (String) session.getAttribute("username");
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }

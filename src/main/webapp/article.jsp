@@ -1,4 +1,4 @@
-<%--
+<%@ page import="pl.diakowski.blog.User.UserDao" %><%--
   Created by IntelliJ IDEA.
   User: Acer
   Date: 24.09.2022
@@ -17,58 +17,75 @@
 
 </head>
 <body>
-<div class="container">
+    <div class="container">
 
-    <header>
-        <h1><a href="index">Blog</a> </h1>
-        <%--        adres do strony--%>
-        <c:if test="${not empty pageContext.request.userPrincipal}">
-            <p>Jesteś zalogowany jako ${pageContext.request.userPrincipal.name}</p>
-        </c:if>
-        <c:if test="${empty pageContext.request.userPrincipal}">
-            <p>Nie masz konta? <a href="${pageContext.request.contextPath}/register.jsp">Zarejestruj się!</a></p>
-        </c:if>
-        <c:if test="${empty pageContext.request.userPrincipal}">
-            <form action="login">
-                <input type="submit" class="login-button" value="Zaloguj" />
-            </form>
-        </c:if>
-        <c:if test="${not empty pageContext.request.userPrincipal}">
-            <form action="logout">
-                <input type="submit" class="login-button" value="Wyloguj" />
-            </form>
-        </c:if>
-    </header>
-    <br>
-    <nav>
-        <ul>
-            <c:forEach items="${requestScope.allCategories}" var="category">
-                <li class="button purplefade"><a href="#">${category.categoryName}</a></li>
-            </c:forEach>
-        </ul>
-    </nav>
-
-    <article id="article${requestScope.article.id}">
-        <h3>${requestScope.article.title}</h3>
-        <p>${requestScope.article.content}</p>
-    </article>
-    
-    <section id="comments" class="comments">
-        <c:if test="${requestScope.article != null}">
-            <h3>Komentarze</h3>
-            <c:if test="${requestScope.commentsForArticle == null}">
-                <p>Brak komentarzy. Bądź pierwszy!</p>
+        <header>
+            <h1><a href="index">Blog</a> </h1>
+            <%--        adres do strony--%>
+            <c:if test="${not empty pageContext.request.userPrincipal}">
+                <p>Jesteś zalogowany jako ${pageContext.request.userPrincipal.name}</p>
             </c:if>
-            <form method="post" action="addComment">
-<%--                obsługa kont użytkowników!--%>
-                    <textarea id="text" placeholder="Wprowadź swój komentarz!" required>
-                    </textarea><br>
-                <button type="submit">
-                    Wyślij
-                </button>
-            </form>
-        </c:if>
-    </section>
-</div>
+            <c:if test="${empty pageContext.request.userPrincipal}">
+                <p>Nie masz konta? <a href="${pageContext.request.contextPath}/register.jsp">Zarejestruj się!</a></p>
+            </c:if>
+            <c:if test="${empty pageContext.request.userPrincipal}">
+                <form action="login">
+                    <input type="submit" class="login-button" value="Zaloguj" />
+                </form>
+            </c:if>
+            <c:if test="${not empty pageContext.request.userPrincipal}">
+                <form action="logout">
+                    <input type="submit" class="login-button" value="Wyloguj" />
+                </form>
+            </c:if>
+        </header>
+        <br>
+        <nav>
+            <ul>
+                <c:forEach items="${requestScope.allCategories}" var="category">
+                    <li class="button purplefade"><a href="#">${category.categoryName}</a></li>
+                </c:forEach>
+            </ul>
+        </nav>
+
+        <article id="article${requestScope.article.id}">
+            <h3>${requestScope.article.title}</h3>
+            <p>${requestScope.article.content}</p>
+        </article>
+
+        <section id="comments" class="comments">
+            <c:if test="${requestScope.article != null}">
+                <h3>Komentarze</h3>
+                <c:if test="${requestScope.commentsForArticle == null}">
+                    <p>Brak komentarzy. Bądź pierwszy!</p>
+                </c:if>
+                <c:if test="${not empty pageContext.request.userPrincipal}">
+                    <form method="post" action="addComment?id=${requestScope.id}">
+        <%--                obsługa kont użytkowników!--%>
+                            <textarea id="comment" name="comment" placeholder="Wprowadź swój komentarz!" class="comment" required>
+                            </textarea><br>
+                        <button type="submit">
+                            Wyślij
+                        </button>
+                    </form>
+                </c:if>
+                <c:if test="${empty pageContext.request.userPrincipal}">
+                    <p>Aby dodawać komentarze, musisz być zalogowanym.</p>
+                </c:if>
+
+                <c:if test="${not empty requestScope.commentsForArticle}">
+                    <section class="userComments">
+                        <c:forEach var="comment" items="${requestScope.commentsForArticle}">
+                            <div class="comment">
+                                <% UserDao userDao = new UserDao(); %>
+                                <h3><c:out value="Autor: ${comment.username}"/></h3>
+                                <p><c:out value="${comment.content}"/></p>
+                            </div>
+                        </c:forEach>
+                    </section>
+                </c:if>
+            </c:if>
+        </section>
+    </div>
 </body>
 </html>

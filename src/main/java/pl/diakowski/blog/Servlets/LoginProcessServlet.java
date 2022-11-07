@@ -19,7 +19,7 @@ public class LoginProcessServlet extends HttpServlet {
         } else {
             if (userDao.checkPassword(username, password)) {
                 request.login(username, password);
-                request.getRequestDispatcher("/index").forward(request, response);
+                response.sendRedirect(request.getContextPath());
             } else {
                 response.sendError(401, "Podano złe dane logowania.");
             }

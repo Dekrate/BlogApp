@@ -24,7 +24,7 @@
     </c:if>
     <h1>Zaloguj się</h1>
     <hr>
-    <form action="login-verification" method="post">
+    <form action="${pageContext.request.contextPath}/login-verification" method="POST">
       <label for="username"><b>Nazwa użytkownika</b></label><br>
       <input type="text" placeholder="" name="username" id="username" required>
       <br>

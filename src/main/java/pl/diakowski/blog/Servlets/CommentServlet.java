@@ -1,19 +1,22 @@
 package pl.diakowski.blog.Servlets;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import pl.diakowski.blog.Comment.Comment;
 import pl.diakowski.blog.Comment.CommentDao;
+import pl.diakowski.blog.User.UserDao;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
+import java.security.Principal;
+import java.time.LocalDateTime;
 
-@WebServlet("/comments")
+@WebServlet("/addComment")
 public class CommentServlet extends HttpServlet {
     private final CommentDao commentDao = new CommentDao();
+    UserDao userDao = new UserDao();
 //    @Override
 //    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        List<Comment> commentsInArticle = commentDao.getCommentsForArticle(Integer.valueOf(request.getParameter("articleId")));
@@ -23,9 +26,11 @@ public class CommentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer articleId = Integer.valueOf(request.getParameter("article_id"));
-        Integer userId = Integer.valueOf(request.getParameter("user_id"));
-        String newComment = (String) request.getAttribute("newComment");
-        commentDao.addComment(new Comment(articleId, userId, new Timestamp(new Date().getTime()), newComment));
+        Principal userPrincipal = request.getUserPrincipal();
+        Integer articleId = Integer.valueOf(request.getParameter("id"));
+        int userId = userDao.findUserId(userPrincipal.getName());
+        String newComment = (String) request.getParameter("comment");
+        commentDao.addComment(new Comment(articleId, userId, userPrincipal.getName(), LocalDateTime.now(), newComment));
+        response.sendRedirect(request.getContextPath());
     }
 }

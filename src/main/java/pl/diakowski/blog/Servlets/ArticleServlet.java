@@ -28,6 +28,7 @@ public class ArticleServlet extends HttpServlet {
         request.setAttribute("allCategories", allCategories);
         request.setAttribute("article", article);
         request.setAttribute("commentsForArticle", commentsForArticle);
+        request.setAttribute("id", id);
         request.getRequestDispatcher("/article.jsp").forward(request, response);
     }
 }

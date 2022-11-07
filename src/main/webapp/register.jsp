@@ -35,7 +35,7 @@
 
       <button type="submit" class="button purplefade">Zarejestruj</button>
       <br>
-      <p>Posiadasz już konto? <a href="WEB-INF/login.jsp">Zaloguj się!</a></p>
+      <p>Posiadasz już konto? <a href="${pageContext.request.contextPath}/login">Zaloguj się!</a></p>
 
     </form>
   </div>

@@ -1,28 +1,40 @@
 package pl.diakowski.blog.Comment;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Comment {
     private Integer id;
     private Integer articleId;
     private Integer userId;
 
-    private Timestamp dateAndTime;
+    private String username;
+
+    private LocalDateTime dateAndTime;
     private String content;
 
-    public Comment(Integer id, Integer articleId, Integer userId, Timestamp dateAndTime, String content) {
+    public Comment(Integer id, Integer articleId, Integer userId, String username, LocalDateTime dateAndTime, String content) {
         this.id = id;
         this.articleId = articleId;
         this.userId = userId;
+        this.username = username;
         this.dateAndTime = dateAndTime;
         this.content = content;
     }
 
-    public Comment(Integer articleId, Integer userId, Timestamp dateAndTime, String content) {
+    public Comment(Integer articleId, Integer userId, String username, LocalDateTime dateAndTime, String content) {
         this.articleId = articleId;
         this.userId = userId;
+        this.username = username;
         this.dateAndTime = dateAndTime;
         this.content = content;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getId() {
@@ -57,11 +69,11 @@ public class Comment {
         this.content = content;
     }
 
-    public Timestamp getDateAndTime() {
+    public LocalDateTime getDateAndTime() {
         return dateAndTime;
     }
 
-    public void setDateAndTime(Timestamp dateAndTime) {
+    public void setDateAndTime(LocalDateTime dateAndTime) {
         this.dateAndTime = dateAndTime;
     }
 }

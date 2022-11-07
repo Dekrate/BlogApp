@@ -76,4 +76,35 @@ public class UserDao {
         }
         return true;
     }
+
+    public int findUserId(String name) {
+        int userId = 0;
+        final String sql = "SELECT (id) FROM blog.users WHERE username=?";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+               userId = resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userId;
+    }
+
+    public String findUserName(int id) {
+        String userName = null;
+        final String sql = "SELECT (username) FROM blog.users WHERE id=?";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                userName = resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userName;
+    }
 }

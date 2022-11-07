@@ -1,6 +1,5 @@
 package pl.diakowski.blog.Article;
 
-import jakarta.validation.constraints.Null;
 import pl.diakowski.blog.DataSourceProvider.DataSourceProvider;
 
 import javax.naming.NamingException;
@@ -22,11 +21,11 @@ public class ArticleDao {
     }
 
     void addArticle(Article article) {
-        String sql = "INSERT INTO blog.articles (articles_category_id, title, content) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO blog.articles (articles_category_id, title, date, content) VALUES (?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, article.getCategoryId());
-            preparedStatement.setObject(2, article.getDateAndTime());
+            preparedStatement.setObject(2, new Timestamp(new java.util.Date().getTime())); // check if it works correctly
             preparedStatement.setString(3, article.getTitle());
             preparedStatement.setString(4, article.getContent());
             preparedStatement.executeUpdate();
@@ -63,7 +62,7 @@ public class ArticleDao {
 
     public Article findArticle(Integer id) {
         final String sql = String.format("SELECT * FROM blog.articles WHERE id=%d", id);
-        Article article = null;
+        Article article;
         try (Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {

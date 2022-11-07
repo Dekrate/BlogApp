@@ -22,9 +22,22 @@
     <header>
         <h1><a href="index">Blog</a> </h1>
         <%--        adres do strony--%>
-        <form action="#">
-            <input type="submit" class="login-button" value="Zaloguj" />
-        </form>
+        <c:if test="${not empty pageContext.request.userPrincipal}">
+            <p>Jesteś zalogowany jako ${pageContext.request.userPrincipal.name}</p>
+        </c:if>
+        <c:if test="${empty pageContext.request.userPrincipal}">
+            <p>Nie masz konta? <a href="${pageContext.request.contextPath}/register.jsp">Zarejestruj się!</a></p>
+        </c:if>
+        <c:if test="${empty pageContext.request.userPrincipal}">
+            <form action="login">
+                <input type="submit" class="login-button" value="Zaloguj" />
+            </form>
+        </c:if>
+        <c:if test="${not empty pageContext.request.userPrincipal}">
+            <form action="logout">
+                <input type="submit" class="login-button" value="Wyloguj" />
+            </form>
+        </c:if>
     </header>
     <br>
     <nav>

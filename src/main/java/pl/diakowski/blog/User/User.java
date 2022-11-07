@@ -6,6 +6,8 @@ public class User {
     private String email;
     private String password;
 
+    private String userRole;
+
     public User(Integer id, String login, String email, String password) {
         this.id = id;
         this.login = login;
@@ -17,6 +19,13 @@ public class User {
         this.login = login;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String login, String email, String password, String userRole) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.userRole = userRole;
     }
 
     public User(String login, String password) {
@@ -54,5 +63,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 }

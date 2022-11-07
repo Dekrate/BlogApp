@@ -18,8 +18,5 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-        response.addHeader("Cache-Control", "no-store,no-cache,must-revalidate");
-        response.addHeader("Pragma", "no-cache");
-        response.addHeader("Expires", "-1");
     }
 }

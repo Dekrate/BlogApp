@@ -11,7 +11,7 @@
 <head>
   <title>Zaloguj się</title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
@@ -24,17 +24,17 @@
     </c:if>
     <h1>Zaloguj się</h1>
     <hr>
-    <form action="j_security_check" method="post">
+    <form action="login-verification" method="post">
       <label for="username"><b>Nazwa użytkownika</b></label><br>
-      <input type="text" placeholder="" name="j_username" id="username" required>
+      <input type="text" placeholder="" name="username" id="username" required>
       <br>
       <label for="password"><b>Hasło</b></label><br>
-      <input type="password" placeholder="" name="j_password" id="password" required>
+      <input type="password" placeholder="" name="password" id="password" required>
       <hr>
 
       <button type="submit" class="button purplefade">Zaloguj się</button>
       <br>
-      <p>Nie posiadasz jeszcze konta? <a href="register.jsp">Zaloguj się!</a></p>
+      <p>Nie posiadasz jeszcze konta? <a href="../register.jsp">Zaloguj się!</a></p>
     </form>
   </div>
 

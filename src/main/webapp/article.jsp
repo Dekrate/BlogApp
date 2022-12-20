@@ -76,9 +76,12 @@
                 <c:if test="${not empty requestScope.commentsForArticle}">
                     <section class="userComments">
                         <c:forEach var="comment" items="${requestScope.commentsForArticle}">
-                            <div class="comment">
-                                <% UserDao userDao = new UserDao(); %>
+                            <div class="comment" id="${comment.id}">
                                 <h3><c:out value="Autor: ${comment.username}"/></h3>
+                                <p><c:out value="Data wysłania: ${comment.dateAndTime}" />
+                                <c:if test="${comment.username == pageContext.request.userPrincipal.name}">
+                                    Edytuj
+                                </c:if> </p>
                                 <p><c:out value="${comment.content}"/></p>
                             </div>
                         </c:forEach>
@@ -86,6 +89,15 @@
                 </c:if>
             </c:if>
         </section>
+        <p onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">Powróć do góry strony</p>
     </div>
+    <script>
+        function addElementsToEdit() {
+            let htmlTextAreaElement = document.createElement("form");
+            htmlTextAreaElement.setAttribute("method", "POST");
+            htmlTextAreaElement.setAttribute("action", "editComment?id=" + document.parentElement.getAttribute())
+            htmlTextAreaElement.
+        }
+    </script>
 </body>
 </html>

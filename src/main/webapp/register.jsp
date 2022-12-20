@@ -26,7 +26,7 @@
       <input type="text" placeholder="" name="username" id="username" required>
       <br>
       <label for="email"><b>Email</b></label><br>
-      <input type="text" placeholder="" name="email" id="email" required>
+      <input type="email" placeholder="" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" name="email" id="email" required>
       <br>
       <label for="password"><b>Hasło</b></label><br>
       <input type="password" placeholder="" name="password" id="password" required>
@@ -39,6 +39,10 @@
 
     </form>
   </div>
+  <script>
+    function validateEmail(email) {
 
+    }
+  </script>
 </body>
 </html>

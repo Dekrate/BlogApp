@@ -1,10 +1,14 @@
 package pl.diakowski.blog.Admin;
 
 import pl.diakowski.blog.DataSourceProvider.DataSourceProvider;
+import pl.diakowski.blog.User.User;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class AdminDao {
     private final DataSource dataSource;
@@ -17,11 +21,13 @@ public class AdminDao {
         }
     }
 
-    public void addAdmin(Admin admin) {
-        String sql = String.format("INSERT INTO blog.user_roles (users_id) VALUES ('%d')", admin.getUserId());
+    public Admin addAdmin(User user) {
+        Admin admin = new Admin();
+        String sql = "UPDATE blog.user_roles SET user_roles=? WHERE username=?";
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, admin.getUserId());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, admin.getUsername());
+            preparedStatement.setString(2, "admin");
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) { // adding parameter id in object User
@@ -30,5 +36,6 @@ public class AdminDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    return admin;
     }
 }

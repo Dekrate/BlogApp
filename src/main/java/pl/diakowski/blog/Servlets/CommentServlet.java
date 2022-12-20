@@ -17,12 +17,14 @@ import java.time.LocalDateTime;
 public class CommentServlet extends HttpServlet {
     private final CommentDao commentDao = new CommentDao();
     UserDao userDao = new UserDao();
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        List<Comment> commentsInArticle = commentDao.getCommentsForArticle(Integer.valueOf(request.getParameter("articleId")));
-//        request.setAttribute("commentsInArticle", commentsInArticle);
-////        request.getRequestDispatcher("index.jsp").forward(request, response);
-//    }
+/*
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Comment> commentsInArticle = commentDao.getCommentsForArticle(Integer.valueOf(request.getParameter("articleId")));
+        request.setAttribute("commentsInArticle", commentsInArticle);
+//        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+*/
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

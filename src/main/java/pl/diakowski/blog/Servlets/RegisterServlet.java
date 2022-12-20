@@ -9,6 +9,7 @@ import pl.diakowski.blog.User.User;
 import pl.diakowski.blog.User.UserDao;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
@@ -26,4 +27,5 @@ public class RegisterServlet extends HttpServlet {
             response.sendError(400, "Użytkownik o podanych danych już istnieje w bazie!");
         }
     }
+
 }

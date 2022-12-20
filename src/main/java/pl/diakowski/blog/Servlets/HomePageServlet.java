@@ -5,11 +5,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import pl.diakowski.blog.Article.Article;
 import pl.diakowski.blog.Article.ArticleCategory;
 import pl.diakowski.blog.Article.ArticleCategoryDao;
 import pl.diakowski.blog.Article.ArticleDao;
+import pl.diakowski.blog.User.UserDao;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -17,6 +17,7 @@ import java.util.List;
 
 @WebServlet({"/index", ""})
 public class HomePageServlet extends HttpServlet {
+    UserDao userDao = new UserDao();
     ArticleDao articleDao = new ArticleDao();
     ArticleCategoryDao articleCategoryDao = new ArticleCategoryDao();
 
@@ -28,6 +29,7 @@ public class HomePageServlet extends HttpServlet {
         request.setAttribute("allArticles", allArticles);
         request.setAttribute("allCategories", allCategories);
         Principal userPrincipal = request.getUserPrincipal();
+
 
 //        String username = (String) session.getAttribute("username");
         request.getRequestDispatcher("/index.jsp").forward(request, response);

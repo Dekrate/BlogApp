@@ -2,15 +2,15 @@ package pl.diakowski.blog.Admin;
 
 public class Admin {
     private Integer id;
-    private Integer userId;
+    private String username;
 
-    public Admin(Integer id, Integer userId) {
+    public Admin(Integer id, String username) {
         this.id = id;
-        this.userId = userId;
+        this.username = username;
     }
 
-    public Admin(Integer userId) {
-        this.userId = userId;
+    public Admin() {
+
     }
 
     public Integer getId() {
@@ -21,11 +21,11 @@ public class Admin {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

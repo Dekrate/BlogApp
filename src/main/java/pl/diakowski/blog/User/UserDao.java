@@ -1,10 +1,14 @@
 package pl.diakowski.blog.User;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import pl.diakowski.blog.DataSourceProvider.DataSourceProvider;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.InputMismatchException;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class UserDao {
     private final DataSource dataSource;
@@ -34,7 +38,9 @@ public class UserDao {
             if (resultSet.isBeforeFirst()) {
                 return false;
             }
-
+            if (!checkEmailPattern(user.getEmail())) {
+                throw new InputMismatchException("Wrong e-mail pattern.");
+            }
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getLogin());
@@ -45,7 +51,6 @@ public class UserDao {
             if (generatedKeys.next()) { // adding parameter id in object User
                 user.setId(generatedKeys.getInt(1));
             }
-
             String sql4 = "INSERT INTO blog.user_roles (username, user_roles) VALUES (?, ?)";
             PreparedStatement addRoles = connection.prepareStatement(sql4);
             addRoles.setString(1, user.getLogin());
@@ -93,11 +98,48 @@ public class UserDao {
         return userId;
     }
 
+    public String getUserRole(int id) {
+        String userRole = null;
+        final String sql = "SELECT (user_roles) FROM blog.user_roles WHERE id=?";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                userRole = resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userRole;
+    }
+
+    public String getUserRole(String username) {
+        String userRole = null;
+        final String sql = "SELECT (user_roles) FROM blog.user_roles WHERE username=?";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                userRole = resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userRole;
+    }
+
+    /**
+     * @param id id of user saved in database
+     * @return username
+     */
     public String findUserName(int id) {
         String userName = null;
         final String sql = "SELECT (username) FROM blog.users WHERE id=?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 userName = resultSet.getString(1);
@@ -106,5 +148,15 @@ public class UserDao {
             throw new RuntimeException(e);
         }
         return userName;
+    }
+
+    /**
+     * Checks the given email whether it's correct or not.
+     * @param email a string that will be checked with official email pattern
+     * @return true if email is correct
+     * @throws PatternSyntaxException  when email pattern does not match original pattern
+     */
+    public Boolean checkEmailPattern(String email) throws PatternSyntaxException {
+        return EmailValidator.getInstance().isValid(email);
     }
 }

@@ -95,4 +95,18 @@ public class ArticleDao {
         }
         return article;
     }
+
+    public void addArticle(String title, String content, int category) {
+        String sql = "INSERT INTO blog.articles (articles_category_id, date, title, content) VALUES (?, ?, ?, ?)";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, category);
+            preparedStatement.setObject(2, LocalDateTime.now());
+            preparedStatement.setString(3, title);
+            preparedStatement.setObject(4, content);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -60,12 +60,26 @@ public class ArticleDao {
         return arrayList;
     }
 
+    public String getTitleById(int id) {
+        final String sql = "SELECT title FROM blog.articles WHERE id=?";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
     public Article findArticle(Integer id) {
-        final String sql = String.format("SELECT * FROM blog.articles WHERE id=%d", id);
+        final String sql = "SELECT * FROM blog.articles WHERE id=?";
         Article article;
-        try (Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        try (Connection connection = dataSource.getConnection()
         ) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
                 int articlesCategoryId = resultSet.getInt("articles_category_id");

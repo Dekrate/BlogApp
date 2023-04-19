@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import pl.diakowski.blog.Admin.AdminDao;
 import pl.diakowski.blog.Article.Article;
 import pl.diakowski.blog.Article.ArticleCategory;
 import pl.diakowski.blog.Article.ArticleCategoryDao;
@@ -18,6 +19,7 @@ import java.util.List;
 @WebServlet({"/index", ""})
 public class HomePageServlet extends HttpServlet {
     UserDao userDao = new UserDao();
+    AdminDao adminDao = new AdminDao();
     ArticleDao articleDao = new ArticleDao();
     ArticleCategoryDao articleCategoryDao = new ArticleCategoryDao();
 
@@ -26,12 +28,19 @@ public class HomePageServlet extends HttpServlet {
 //        Principal userPrincipal = request.getUserPrincipal();
         List<ArticleCategory> allCategories = articleCategoryDao.getAllCategories();
         List<Article> allArticles = articleDao.findAllArticles();
+        Principal userPrincipal = request.getUserPrincipal();
+        boolean checkIfAdmin = false;
+        if (userPrincipal != null) {
+            if (adminDao.checkIfAdmin(userPrincipal.getName())) {
+                checkIfAdmin = true;
+            }
+        }
         request.setAttribute("allArticles", allArticles);
         request.setAttribute("allCategories", allCategories);
-        Principal userPrincipal = request.getUserPrincipal();
+        request.setAttribute("checkIfAdmin", checkIfAdmin);
 
 
 //        String username = (String) session.getAttribute("username");
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
     }
 }

@@ -40,12 +40,35 @@ public class CommentDao {
         }
     }
 
+    public void deleteCommentById(int id) {
+        String sql = "DELETE FROM blog.comments WHERE ID=?";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Deprecated
+    public Integer getAmountOfComments() {
+        String sql = "SELECT COUNT(*) FROM blog.comments";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public List<Comment> getCommentsForArticle(Integer articleId) {
         UserDao userDao = new UserDao();
         List<Comment> comments = new ArrayList<>();
-        String sql = String.format("SELECT * FROM blog.comments WHERE articles_id='%s' ORDER BY date DESC", articleId);
+        String sql = "SELECT * FROM blog.comments WHERE articles_id=? ORDER BY date DESC";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, articleId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");

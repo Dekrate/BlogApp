@@ -1,10 +1,4 @@
-<%@ page import="pl.diakowski.blog.User.UserDao" %><%--
-  Created by IntelliJ IDEA.
-  User: Acer
-  Date: 24.09.2022
-  Time: 22:24
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -79,9 +73,7 @@
                             <div class="comment" id="${comment.id}">
                                 <h3><c:out value="Autor: ${comment.username}"/></h3>
                                 <p><c:out value="Data wysłania: ${comment.dateAndTime}" />
-                                <c:if test="${comment.username == pageContext.request.userPrincipal.name}">
-                                    Edytuj
-                                </c:if> </p>
+                                </p>
                                 <p><c:out value="${comment.content}"/></p>
                             </div>
                         </c:forEach>
@@ -92,12 +84,6 @@
         <p onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">Powróć do góry strony</p>
     </div>
     <script>
-        function addElementsToEdit() {
-            let htmlTextAreaElement = document.createElement("form");
-            htmlTextAreaElement.setAttribute("method", "POST");
-            htmlTextAreaElement.setAttribute("action", "editComment?id=" + document.parentElement.getAttribute())
-            htmlTextAreaElement.
-        }
     </script>
 </body>
 </html>

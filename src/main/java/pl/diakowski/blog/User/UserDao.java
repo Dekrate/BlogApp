@@ -7,7 +7,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.InputMismatchException;
-import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class UserDao {
@@ -114,6 +113,10 @@ public class UserDao {
         return userRole;
     }
 
+    /**
+     * @param username
+     * @return
+     */
     public String getUserRole(String username) {
         String userRole = null;
         final String sql = "SELECT (user_roles) FROM blog.user_roles WHERE username=?";

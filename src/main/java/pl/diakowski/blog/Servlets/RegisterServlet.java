@@ -9,9 +9,8 @@ import pl.diakowski.blog.User.User;
 import pl.diakowski.blog.User.UserDao;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
 
-@WebServlet("/register")
+@WebServlet("/registerPage")
 public class RegisterServlet extends HttpServlet {
     UserDao userDao = new UserDao();
     @Override

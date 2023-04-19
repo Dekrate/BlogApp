@@ -12,6 +12,10 @@
         <div class="container">
             <c:if test="${not empty pageContext.request.userPrincipal}">
                 <p>Jesteś zalogowany jako ${pageContext.request.userPrincipal.name}</p>
+
+                <c:if test="${requestScope.checkIfAdmin}">
+                    <p>Przejdź do <a href="admin/index">panelu administracyjnego</a>.</p>
+                </c:if>
             </c:if>
             <c:if test="${empty pageContext.request.userPrincipal}">
                 <p>Nie masz konta? <a href="${pageContext.request.contextPath}/register.jsp">Zarejestruj się!</a></p>

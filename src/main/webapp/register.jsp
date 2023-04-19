@@ -21,7 +21,7 @@
     <h1>Rejestracja</h1>
     <p>Wypełnij formularz, aby założyć konto w serwisie!</p>
     <hr>
-    <form action="register" method="post">
+    <form action="registerPage" method="post">
       <label for="username"><b>Nazwa użytkownika</b></label><br>
       <input type="text" placeholder="" name="username" id="username" required>
       <br>

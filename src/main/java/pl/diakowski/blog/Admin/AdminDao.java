@@ -21,6 +21,21 @@ public class AdminDao {
         }
     }
 
+    public boolean checkIfAdmin(String user) {
+        String sql = "SELECT user_roles FROM user_roles WHERE username=?";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, user);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString(1).equals("admin");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
     public Admin addAdmin(User user) {
         Admin admin = new Admin();
         String sql = "UPDATE blog.user_roles SET user_roles=? WHERE username=?";
@@ -33,9 +48,9 @@ public class AdminDao {
             if (generatedKeys.next()) { // adding parameter id in object User
                 admin.setId(generatedKeys.getInt(1));
             }
+            return admin;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    return admin;
     }
 }

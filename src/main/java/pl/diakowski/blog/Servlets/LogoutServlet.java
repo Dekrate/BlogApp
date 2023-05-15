@@ -13,5 +13,4 @@ public class LogoutServlet extends HttpServlet {
         request.logout();
         response.sendRedirect(request.getContextPath());
     }
-
 }

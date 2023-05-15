@@ -32,6 +32,4 @@ public class AdminPanelHomePageServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/admin/index.jsp").forward(request, response);
         }
     }
-
-
 }

@@ -16,7 +16,6 @@ public class RegisterPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getUserPrincipal() == null) {
             request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
-
         }
     }
 }

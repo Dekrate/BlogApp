@@ -48,6 +48,4 @@ public class AdminPanelManageComments extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/admin/manageComments.jsp").forward(request, response);
         }
     }
-
-
 }

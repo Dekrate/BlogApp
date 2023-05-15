@@ -42,6 +42,4 @@ public class DeleteCommentServlet extends HttpServlet {
             response.sendRedirect("/admin/manageComments");
         }
     }
-
-
 }

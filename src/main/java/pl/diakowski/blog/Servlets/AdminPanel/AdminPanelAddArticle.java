@@ -34,6 +34,4 @@ public class AdminPanelAddArticle extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/admin/createPost.jsp").forward(request, response);
         }
     }
-
-
 }
